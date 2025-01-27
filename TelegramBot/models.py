@@ -9,3 +9,18 @@ class TGUser(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+class RequestDataMatrixLog(models.Model):
+    user = models.ForeignKey(TGUser, on_delete=models.CASCADE)
+    request_type = models.CharField(max_length=20) #GTIN or PLU
+    in_value = models.CharField(max_length=100) # Входное значение(или штрихкод или плюшка)
+    request_status = models.CharField(max_length=50)
+    # Статус запроса
+    # completed - datamatrix сгененрирован
+    # item_not_found - товар по plu не найден
+
+    #item =  ТУТ ДОЛЖНА БЫТЬ ПРИВЯЗА К ЛОКАЛЬНОМУ РЕЕСТРУ ТОВАРОВ
+    datamatrix_count = models.IntegerField()
+    request_reason = models.CharField(max_length=1000)
+    requets_is_processed = models.BooleanField()

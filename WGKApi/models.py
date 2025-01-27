@@ -30,4 +30,15 @@ class ProductGroup(models.Model):
         verbose_name_plural = 'Product Groups'
         ordering = ['product_type', 'group_code']
 
-    
+class UnitOfMeasureCode(models.Model):
+    code = models.CharField(max_length=15)
+    name = models.CharField(max_length=100)
+
+
+class GKProduct(models.Model):
+    plu = models.IntegerField(unique=True)
+    shortName = models.CharField(max_length=100)
+    fullName = models.CharField(max_length=100)
+    merchendiseGroup = models.ForeignKey(ProductGroup, on_delete=models.CASCADE)
+    unitOfMeasureCode = models.ForeignKey(UnitOfMeasureCode, on_delete=models.CASCADE)
+   # itemIds

@@ -32,8 +32,6 @@ def InitSyncProcedure():
 
 @shared_task
 def AcceptanceOfChanges(filepath):
-    # Проверить доступность
-    # serverAvailable = ping_external_server()
 
     with open(filepath, 'r') as file:
         data = json.load(file)
