@@ -23,4 +23,4 @@ class RequestDataMatrixLog(models.Model):
     #item =  ТУТ ДОЛЖНА БЫТЬ ПРИВЯЗА К ЛОКАЛЬНОМУ РЕЕСТРУ ТОВАРОВ
     datamatrix_count = models.IntegerField()
     request_reason = models.CharField(max_length=1000)
-    requets_is_processed = models.BooleanField()
+    requets_is_processed = models.BooleanField(default=False)
