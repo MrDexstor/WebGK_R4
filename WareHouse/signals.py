@@ -1,6 +1,7 @@
 from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.dispatch import receiver
-from django.forms.models import model_to_dict
+
+from Lib.serializations import model_to_dict
 from WareHouse.models import Warehouse, Shelf, Product, Inventory, InventoryItem
 from SyncModule.models import ChangeLog
 
