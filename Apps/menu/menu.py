@@ -25,6 +25,14 @@ def tools(request):
     return render(request, page, 'Core/menu_builder.html', {'menu': menu.build()})
     
 
+def delivery(request):
+    page = Page('Система доставки', "Доставка", 'Управление доставкой')
+    menu = MasterMenu()
+    menu.add('Фиктивная проводка документов доставки', '/GK/tools/fpdd/', '/static/icon/colored/storno.png')
+    menu.add('Пользователи Telegram', '/GK/', '/static/icon/colored/telegram.png')
+    menu.add('Запросы DataMatrix', '/GK/tools/fpdd/', '/static/icon/colored/qr.png' )
+    return render(request, page, 'Core/menu_builder.html', {'menu': menu.build()})
+
 def profile(request):
     page = Page('Профиль', 'Профиль', 'Настройки пользователя/системы')
     menu = MasterMenu()
