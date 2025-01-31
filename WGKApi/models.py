@@ -10,7 +10,7 @@ class Files(models.Model):
     type = models.CharField('Расширение файла', max_length=100)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     
-# Кусок кода ответственного за выбор типа категориии товара ,пока не работоспособен,возможно нужно уточнить список всех возможных типов
+# Кусок кода ответственного за выбор типа категориии товара, пока не работоспособен, возможно нужно уточнить список всех возможных типов
 class ProductGroup(models.Model):
  #   PRODUCT_TYPE_CHOICES = [
  #       ('FR', 'Fresh'),
@@ -34,14 +34,12 @@ class UnitOfMeasureCode(models.Model):
     code = models.CharField(max_length=15)
     name = models.CharField(max_length=100)
 
-
 class GKProduct(models.Model):
     plu = models.IntegerField(unique=True)
     shortName = models.CharField(max_length=100)
     fullName = models.CharField(max_length=100)
     merchendiseGroup = models.ForeignKey(ProductGroup, on_delete=models.CASCADE)
     unitOfMeasureCode = models.ForeignKey(UnitOfMeasureCode, on_delete=models.CASCADE)
-   # itemIds
 
 class Barcode(models.Model):
     code = models.CharField(max_length=100, unique=True)
