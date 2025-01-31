@@ -1,6 +1,7 @@
 from django.db import models
 
 class TGUser(models.Model):
+    objects = None
     user_id = models.IntegerField(unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
