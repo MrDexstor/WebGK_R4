@@ -1,6 +1,8 @@
 import requests
 import json
 from celery import shared_task
+
+import SyncModule
 from SyncModule.libs import ping_external_server, generate_changes_file
 from Core.config import REMOTE_ADDRES_SERVER
 from django.apps import apps
@@ -92,7 +94,7 @@ def AcceptanceOfChanges(filepath):
     
     serverAvailable = ping_external_server() 
     
-    if serverAvailable:
+    if serverAvailable and applied_changes and SyncModule.objects.filter(synced=False):
         remote_server_url = REMOTE_ADDRES_SERVER + '/dbw/file_acceptance/'
 
         # Открываем файл в бинарном режиме
