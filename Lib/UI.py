@@ -67,6 +67,10 @@ class Page:
                     'icon': 'settings'
                 },
                 {
+                    'url' : '/GK/menu/delivery/',
+                    'icon': 'delivery'
+                },
+                {
                     'url': '/GK/menu/profile/',
                     'icon': 'profile'
                 }

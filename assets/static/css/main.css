@@ -2,6 +2,7 @@
   --home-icon: url('/static/icon/home.svg');
   --grid-icon: url('/static/icon/basket.svg');
   --settings-icon: url('/static/icon/tools.svg');
+  --delivery-icon: url('/static/icon/delivery.svg');
   --profile-icon: url('/static/icon/user.svg');
 }
 
@@ -107,6 +108,10 @@ body {
 
 .profile::before {
   background-image: var(--profile-icon);
+}
+
+.delivery::before {
+  background-image: var(--delivery-icon);
 }
 
 .button-container {

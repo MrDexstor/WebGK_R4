@@ -6,6 +6,8 @@ class TGUser(models.Model):
     last_name = models.CharField(max_length=100)
     position = models.CharField(max_length=50)
     sap_number = models.CharField(max_length=50)
+    is_store_admin = models.BooleanField('Пользователь является административным?', default=False)
+    admin_mode = models.BooleanField('Пользователь принимает административные сообщения', default=False)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

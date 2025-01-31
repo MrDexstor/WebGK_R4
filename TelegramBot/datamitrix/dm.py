@@ -4,7 +4,6 @@ from TelegramBot.datamitrix.matrixGenerator import generateDataMatrix
 from TelegramBot.models import RequestDataMatrixLog, TGUser
 from asgiref.sync import sync_to_async
 
-
 async def cmd_gdm(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = await sync_to_async(TGUser.objects.get)(user_id=update.effective_user.id)
     if user:
@@ -13,16 +12,16 @@ async def cmd_gdm(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             await update.message.reply_text('Недостаточно аргументов. Использование: /gdm <barcode> {count_dm:optional}')
             return
 
-        #Получаем штрих из запроса
+        # Получаем штрих из запроса
         barcode = args[0]
 
-        #Получаем кол-во матриксов
+        # Получаем кол-во матриксов
         if len(args) == 2:
             dm_count = int(args[1])
         else:
             dm_count = 1
 
-        #Ограничиваем колво матриксов за раз
+        # Ограничиваем колво матриксов за раз
         if dm_count > 9:
             dm_count = 9
 
@@ -40,10 +39,25 @@ async def cmd_gdm(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         request_dm = await sync_to_async(RequestDataMatrixLog.objects.create)(
             user=user, request_type='GTIN', in_value=barcode, request_status='completed', datamatrix_count=dm_count
         )
-        print(request_dm.id)
+        context.user_data['request_id'] = request_dm.id
 
-def response_reacon(update: Update, context: CallbackContext) -> None:
+async def response_reacon(update: Update, context: CallbackContext) -> None:
     query = update.callback_query
-    query.answer()
+    await query.answer()  # Исправлено на await
     button_data = query.data
+    request_dm_id = context.user_data.get('request_id', '')
+
     chat_id = query.message.chat_id
+    await context.bot.send_message(chat_id=update.effective_user.id, text=f'{request_dm_id} === {button_data}')
+    user = await sync_to_async(TGUser.objects.get)(user_id=update.effective_user.id)
+    store = user.sap_number
+    admin_users_inShift = await sync_to_async(list)(TGUser.objects.filter(sap_number=store, is_store_admin=True, admin_mode=True))
+    for adm_user in admin_users_inShift:
+        await context.bot.send_message(
+            chat_id=adm_user.user_id,
+            text=rf'''Новый запрос от пользователя <a href="tg://user?id={update.effective_user.id}">{user.first_name} {user.last_name}</a>
+Запрошенный товар:
+Количество DM:
+Причина: ''',
+            parse_mode='HTML'
+        )
