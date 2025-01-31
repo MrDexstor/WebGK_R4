@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.dispatch import receiver
-from django.forms.models import model_to_dict
+from Lib.serializations import model_to_dict
 from SyncModule.models import ChangeLog
 from WGKApi.models import ProductGroup, UnitOfMeasureCode, GKProduct, Barcode
 
