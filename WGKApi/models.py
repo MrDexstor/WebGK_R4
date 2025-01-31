@@ -42,3 +42,7 @@ class GKProduct(models.Model):
     merchendiseGroup = models.ForeignKey(ProductGroup, on_delete=models.CASCADE)
     unitOfMeasureCode = models.ForeignKey(UnitOfMeasureCode, on_delete=models.CASCADE)
    # itemIds
+
+class Barcode(models.Model):
+    code = models.CharField(max_length=100, unique=True)
+    product = models.ForeignKey(GKProduct, related_name='barcodes', on_delete=models.CASCADE)
