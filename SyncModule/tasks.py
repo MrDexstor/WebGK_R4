@@ -94,7 +94,7 @@ def AcceptanceOfChanges(filepath):
     
     serverAvailable = ping_external_server() 
     
-    if serverAvailable and applied_changes and ChangeLog.objects.filter(synced=False):
+    if serverAvailable and (applied_changes or ChangeLog.objects.filter(synced=False)):
         remote_server_url = REMOTE_ADDRES_SERVER + '/dbw/file_acceptance/'
 
         # Открываем файл в бинарном режиме
