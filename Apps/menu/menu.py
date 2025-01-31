@@ -20,7 +20,6 @@ def tools(request):
     menu.add('Печать этикеток (QR)', '/GK/tools/FPDD/', '/static/icon/colored/label.png')
     menu.add('Файлы', '/GK/files/', '/static/icon/colored/file-transfer.png')
     menu.add('Печать документа', '/GK/', '/static/icon/colored/print.png')
-    menu.add('Фиктивная проводка документов доставки', '/GK/tools/fpdd/', '/static/icon/colored/storno.png', '80')
     menu.add('Доступность (Проводка)', '/GK/tools/accessibility/', '/static/icon/colored/accessibility.png', '0')
     menu.add('Сигналы УТП (Проводка)', '/GK/tools/YTP/', '/static/icon/colored/ytp.png', '6')
     return render(request, page, 'Core/menu_builder.html', {'menu': menu.build()})
