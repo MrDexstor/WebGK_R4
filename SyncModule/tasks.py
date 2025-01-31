@@ -58,7 +58,7 @@ def AcceptanceOfChanges(filepath):
                 related_model_name = field[:-3]
                 related_model = apps.get_model(app_label=app_label, model_name=related_model_name.capitalize())
                 new_state[field] = related_model.objects.get(id=value)
-
+        print(new_state)
         # В зависимости от типа изменения, выполняем соответствующие действия
         if change_type == 'insert':
             # Создаем новую запись
