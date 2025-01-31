@@ -51,7 +51,13 @@ def AcceptanceOfChanges(filepath):
         new_state = change["new_state"]
         new_state.pop('id', None)
         # Получаем модель по имени
-        model = apps.get_model(app_label='WareHouse', model_name=model_name)
+        model = apps.get_model(app_label=app_label, model_name=model_name)
+
+        for field, value in new_state.items():
+            if isinstance(value, int) and field.endswith('_id'):
+                related_model_name = field[:-3]
+                related_model = apps.get_model(app_label=app_label, model_name=related_model_name.capitalize())
+                new_state[field] = related_model.objects.get(id=value)
 
         # В зависимости от типа изменения, выполняем соответствующие действия
         if change_type == 'insert':
