@@ -4,6 +4,8 @@ from django.forms.models import model_to_dict
 from WareHouse.models import Warehouse, Shelf, Product, Inventory, InventoryItem
 from SyncModule.models import ChangeLog
 
+app_label = 'WareHouse'
+
 @receiver(post_save, sender=Warehouse)
 @receiver(post_save, sender=Shelf)
 @receiver(post_save, sender=Product)
@@ -16,6 +18,7 @@ def log_change(sender, instance, created, **kwargs):
     change_type = 'insert' if created else 'update'
     new_state = model_to_dict(instance)
     ChangeLog.objects.create(
+        app_label=app_label,
         model_name=sender.__name__,
         record_id=instance.id,
         change_type=change_type,
@@ -32,6 +35,7 @@ def log_delete(sender, instance, **kwargs):
         return
 
     ChangeLog.objects.create(
+        app_label=app_label,
         model_name=sender.__name__,
         record_id=instance.id,
         change_type='delete',
@@ -46,6 +50,7 @@ def log_m2m_change(sender, instance, action, **kwargs):
     if action in ["post_add", "post_remove", "post_clear"]:
         new_state = model_to_dict(instance)
         ChangeLog.objects.create(
+        app_label=app_label,
             model_name=InventoryItem.__name__,
             record_id=instance.id,
             change_type='update',

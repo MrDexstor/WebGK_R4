@@ -41,6 +41,7 @@ def AcceptanceOfChanges(filepath):
 
     for change in changes:
         id = change["id"]
+        app_label = change['app_label']
         model_name = change["model_name"]
         record_id = change["record_id"]
         change_type = change["change_type"]
