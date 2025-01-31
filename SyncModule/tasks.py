@@ -5,6 +5,9 @@ from SyncModule.libs import ping_external_server, generate_changes_file
 from Core.config import REMOTE_ADDRES_SERVER
 from django.apps import apps
 
+from SyncModule.models import ChangeLog
+
+
 @shared_task
 def InitSyncProcedure():
     # Проверить доступность
@@ -72,9 +75,11 @@ def AcceptanceOfChanges(filepath):
         # Добавляем ID примененного изменения в список
         applied_changes.append(id)
     applied_changes_response = data.get("applied_changes", [])
-    if applied_changes_response != []:
+    if applied_changes_response:
         for id_r in applied_changes_response:
-            print(f'Change {id_r} aplied')
+            logline = ChangeLog.objects.get(id=id_r)
+            logline.synced = True
+            logline.save()
     
     
     changeFileUrl = generate_changes_file('response', applied_changes)
