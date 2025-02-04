@@ -1,9 +1,12 @@
 from Lib.UI import Page, render, redirect
-from WareHouse.models import InventoryItem
+from WareHouse.models import InventoryItem, Inventory
 
 
 def main_doc(request, warehouse_id, pack_task_id):
-    pass
+
+    packing = Inventory.objects.get(id=pack_task_id)
+    page = Page('Выкладка', f'Выкладка №{pack_task_id}', f'Склад для выкладки №{warehouse_id}')
+    return render(request, page, 'warehouses/pack/worker/doc_panel.html', {'packing': packing} )
 
 
 def collect_data(request, warehouse_id, pack_task_id):
