@@ -8,3 +8,6 @@ uploads/
 dump.rdb
 TODO.txt
 dbwsync/
+script/celery.sh
+script/web.sh
+script/tg_bot.sh
