@@ -40,6 +40,8 @@ async def cmd_gdm(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             user=user, request_type='GTIN', in_value=barcode, request_status='completed', datamatrix_count=dm_count
         )
         context.user_data['request_id'] = request_dm.id
+    else:
+        await update.message.reply_text('Привет, коллега! Я обновился и многое забыл... Для правильной работы нажми сюда --> /start')
 
 async def response_reacon(update: Update, context: CallbackContext) -> None:
     query = update.callback_query
@@ -48,7 +50,7 @@ async def response_reacon(update: Update, context: CallbackContext) -> None:
     request_dm_id = context.user_data.get('request_id', '')
 
     chat_id = query.message.chat_id
-    await context.bot.send_message(chat_id=update.effective_user.id, text=f'{request_dm_id} === {button_data}')
+    await context.bot.send_message(chat_id=update.effective_user.id, text=f'Сохранил! Спасибо за ответ! Это будет обработано моим хозяином....')
     user = await sync_to_async(TGUser.objects.get)(user_id=update.effective_user.id)
     store = user.sap_number
     admin_users_inShift = await sync_to_async(list)(TGUser.objects.filter(sap_number=store, is_store_admin=True, admin_mode=True))
