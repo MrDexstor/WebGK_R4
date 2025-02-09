@@ -72,12 +72,16 @@ def universal_post_save(sender, instance, created, **kwargs):
 # Универсальный обработчик для post_delete
 @receiver(post_delete)
 def universal_post_delete(sender, instance, **kwargs):
+    try:
+        ids_rec = int(instance.id)
+    except Exception:
+        ids_rec = 0
     log = {
         "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         "changes": {
             "app": sender._meta.app_label,
             "table": sender.__name__,
-            "record_id": instance.id,
+            "record_id": ids_rec,
             "change_type": "delete",
             "old_state": old_state.pop(instance.pk, {}),
             "new_state": {},
