@@ -9,7 +9,6 @@ models = [Warehouse, Shelf, Product, Inventory, InventoryItem]
 old_state = {}
 
 # Универсальный обработчик для pre_save
-@receiver(pre_save)
 def universal_pre_save(sender, instance, **kwargs):
     if instance.pk:  # Если запись уже существует в базе данных
         try:
@@ -29,11 +28,10 @@ def universal_pre_save(sender, instance, **kwargs):
             pass
 
 # Универсальный обработчик для post_save
-@receiver(post_save)
 def universal_post_save(sender, instance, created, **kwargs):
     if getattr(instance, '_is_sync', False):
         return
-    if sender.__name__ in str(models.value()):
+    if True:
         change_type = 'create' if created else 'update'
         log = {
             "timestamp": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -72,9 +70,8 @@ def universal_post_save(sender, instance, created, **kwargs):
         print(log)
 
 # Универсальный обработчик для post_delete
-@receiver(post_delete)
 def universal_post_delete(sender, instance, **kwargs):
-    if sender.__name__ in str(models.value()):
+    if True:
 
         try:
             ids_rec = int(instance.id)
