@@ -43,7 +43,7 @@ LAN_WIFI_SSID = 'Dmitr.Sorokovykh'
 TELEGRAM_BOT_TOKEN = '{tg_token}'
 
 #Шаблон DataMatrix
-DATAMATRIX_template = '010+215%%qlDivRD===R93Ho/N'
+DATAMATRIX_template = '010+215%qlDivRD===R93Ho/N'
 
 #ДАЛЕЕ НИЧЕГО НЕ МЕНЯЕМ!!!
 # Обработчики настроек
